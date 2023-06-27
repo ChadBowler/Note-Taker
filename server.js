@@ -26,9 +26,8 @@ app.get('/notes', (req, res) => {
 app.get('/api/notes', (req, res) => {
     res.json(noteData);
 });
-
+//add note
 app.post('/api/notes', (req, res) => {
-   
     console.info(`${req.method} request received to add a note`);
     // console.log(req);
     const { text, title } = req.body;
@@ -49,73 +48,35 @@ app.post('/api/notes', (req, res) => {
                 console.log('New note has been saved!');
             })
           })
-        
+          
           const response = {
             status: 'success',
             body: newNote,
           };
       
-        //   console.log(response);
-          res.status(201).json(response);  
+          res.status(200).sendFile(path.join(__dirname, 'Develop/public/index.html')) 
          
     } else {
         res.status(500).json('Error in posting note');
       }  
 });
-//delete
+//delete note
 app.delete('/api/notes/:id', (req, res) => {
     console.info(`${req.method} request received to delete a note`);
     res.json(noteData)
-    console.log(noteData);
-    console.log(req.params.id);
     let currentId = req.params.id;
     for (let i = 0; i < noteData.length; i++) {
         const element = noteData[i];
         if (element.id == currentId) {
             noteData.splice(i, 1);
         }
-        
     }
-    console.log(noteData);
     const newData = JSON.stringify(noteData)
     fs.writeFile('./Develop/db/db.json', newData, (err) => {
         if (err) throw err;
         console.log('Note has been deleted!');
+       
     })
-    // console.log(req);
-    // console.log(req);
-    // const { id, text, title } = req.body;
-    // console.log(req.body);
-    // if (text && title) {
-        
-        // const newNote = {
-        //     title,
-        //     text,
-        //     id: uuidv4()
-        // }
-        // fs.readFile('./Develop/db/db.json', 'utf8', (err, data) => {
-        //     if (err) throw err;
-        //     fileData = JSON.parse(data)
-        //     fileData.push(newNote);
-        //     const newData = JSON.stringify(fileData)
-
-        //     fs.writeFile('./Develop/db/db.json', newData, (err) => {
-        //         if (err) throw err;
-        //         console.log('New note has been saved!');
-        //     })
-        //   })
-        
-        //   const response = {
-        //     status: 'success',
-        //     body: newNote,
-        //   };
-      
-        //   console.log(response);
-    //       res.status(201).json(response);  
-         
-    // } else {
-    //     res.status(500).json('Error in posting note');
-    //   }  
 });
 
 app.get('*', (req, res) => {
