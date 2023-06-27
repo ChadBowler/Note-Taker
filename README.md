@@ -22,7 +22,7 @@ A simple note taking app that uses Node.js and Express to route the user.
 
 ## Usage
 
-* Go to [Live Link](#https://note-taker-cbowler-64202b69a01c.herokuapp.com/)
+* Go to [Live Link](https://note-taker-cbowler-64202b69a01c.herokuapp.com/)
 
 
 ## License
