@@ -54,7 +54,7 @@ app.post('/api/notes', (req, res) => {
             body: newNote,
           };
       
-          res.status(200).sendFile(path.join(__dirname, 'Develop/public/index.html')) 
+          res.status(200) 
          
     } else {
         res.status(500).json('Error in posting note');
