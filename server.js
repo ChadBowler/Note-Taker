@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 const path = require('path');
 const express = require('express');
 const app = express();
@@ -83,5 +86,5 @@ async function writeToFile(data) {
 
 
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
 
