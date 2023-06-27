@@ -24,6 +24,9 @@ A simple note taking app that uses Node.js and Express to route the user.
 
 * Go to [Live Link](https://note-taker-cbowler-64202b69a01c.herokuapp.com/)
 
+## Screenshot
+
+![Note Taker](https://github.com/ChadBowler/Note-Taker/assets/127648744/25defaf2-96f4-434f-9c62-837b1bbeae5f)
 
 ## License
 
