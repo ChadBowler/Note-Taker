@@ -4,9 +4,6 @@ let saveNoteBtn;
 let newNoteBtn;
 let noteList;
 
-// const Window = require('window');
-// const window = new Window();
-
   if (window.location.pathname === '/notes') {
     noteTitle = document.querySelector('.note-title');
     noteText = document.querySelector('.note-textarea');
@@ -14,8 +11,6 @@ let noteList;
     newNoteBtn = document.querySelector('.new-note');
     noteList = document.querySelectorAll('.list-container .list-group');
   }
-
-
 
 // Show an element
 const show = (elem) => {
