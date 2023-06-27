@@ -37,17 +37,10 @@ app.post('/api/notes', (req, res) => {
             text,
             id: uuidv4()
         }
-        fs.readFile('./Develop/db/db.json', 'utf8', (err, data) => {
-            if (err) throw err;
-            fileData = JSON.parse(data)
-            fileData.push(newNote);
-            const newData = JSON.stringify(fileData)
-
-            fs.writeFile('./Develop/db/db.json', newData, (err) => {
-                if (err) throw err;
-                console.log('New note has been saved!');
-            })
-          })
+        const fileData = noteData;
+        fileData.push(newNote);
+        const newData = JSON.stringify(fileData);
+        writeToFile(newData);
           
           const response = {
             status: 'success',
@@ -82,6 +75,14 @@ app.delete('/api/notes/:id', (req, res) => {
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'Develop/public/index.html'))
 });
+
+async function writeToFile(data) {
+    const newData = await data;
+    fs.writeFile('./Develop/db/db.json', newData, (err) => {
+        if (err) throw err;
+        console.log('New note has been saved!');
+    })
+}
 
 
 
