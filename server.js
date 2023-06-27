@@ -5,9 +5,13 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const { v4: uuidv4 } = require('uuid');
-// app.use(express.static(path.join(__dirname, 'Develop')));
+const fs = require('fs');
+const noteData = require('./Develop/db/db.json');
+let fileDirectoryPath = (path.join(__dirname, `Develop/public`))
+app.use(express.static(fileDirectoryPath));
 
-// console.log(__dirname);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //routes
 
@@ -19,8 +23,45 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, 'Develop/public/notes.html'))
 });
 
+app.get('/api/notes', (req, res) => {
+    res.json(noteData);
+});
+
+app.post('/api/notes', (req, res) => {
+   
+    console.info(`${req.method} request received to add a note`);
+    // console.log(req);
+    const { text, title } = req.body;
+    if (text && title) {
+        const newNote = {
+            title,
+            text,
+            id: uuidv4()
+        }
+        fs.readFile('./Develop/db/db.json', 'utf8', (err, data) => {
+            if (err) throw err;
+            console.log(data);
+            fileData = JSON.parse(data)
+            fileData.push(newNote);
+            console.log(fileData);
+            const newData = JSON.stringify(fileData)
+            fs.writeFile('./Develop/db/db.json', newData, (err) => {
+                if (err) throw err;
+                console.log('New note has been saved!');
+            })
+          })
+        //   const newData = JSON.stringify(fileData)
+        //   console.log(newData);
+        
+          
+    }
+    
+      
+});
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'Develop/public/index.html'))
 });
 
 app.listen(process.env.PORT || 3000);
+
