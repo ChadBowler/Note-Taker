@@ -40,21 +40,27 @@ app.post('/api/notes', (req, res) => {
         }
         fs.readFile('./Develop/db/db.json', 'utf8', (err, data) => {
             if (err) throw err;
-            console.log(data);
             fileData = JSON.parse(data)
             fileData.push(newNote);
-            console.log(fileData);
             const newData = JSON.stringify(fileData)
+
             fs.writeFile('./Develop/db/db.json', newData, (err) => {
                 if (err) throw err;
                 console.log('New note has been saved!');
             })
           })
-        //   const newData = JSON.stringify(fileData)
-        //   console.log(newData);
         
-          
-    }
+          const response = {
+            status: 'success',
+            body: newNote,
+          };
+      
+        //   console.log(response);
+          res.status(201).json(response);  
+    } else {
+        res.status(500).json('Error in posting note');
+      }
+    
     
       
 });
